@@ -1,19 +1,22 @@
-# 🏀 NBA Player Statistics Analysis (2023-24 Season)
+# 🏀 NBA Player Statistics Analysis (2015-2024)
 
-A comprehensive data analysis project examining NBA player performance metrics, statistical relationships, and team comparisons for the 2023-24 season.
+A comprehensive data analysis project examining NBA player performance metrics, statistical relationships, and trends across 10 NBA seasons from 2015 to 2024.
+
+![NBA Analysis Animation](images/nba_analysis_demo.gif)
 
 ## 🎯 Project Overview
 
-This project provides in-depth statistical analysis of NBA player performance using data science techniques including data cleaning, exploratory data analysis, statistical correlation analysis, and advanced visualization. The analysis covers 736 NBA players and reveals key insights about player efficiency, team performance, and positional trends.
+This project provides in-depth statistical analysis of NBA player performance using data science techniques including data cleaning, exploratory data analysis, statistical correlation analysis, and advanced visualization. The analysis covers over 6,700 player records across 10 seasons and reveals key insights about player efficiency, position evolution, and statistical trends.
 
 ## 📊 Key Features
 
-- **Comprehensive Data Analysis**: Analysis of 31 different statistical metrics
+- **Multi-Season Analysis**: Comprehensive examination of 10 NBA seasons (2015-2024)
+- **Position Evolution Tracking**: Analysis of how position distributions have changed over time
+- **Statistical Trend Analysis**: Visualization of scoring, efficiency, and style changes
 - **Advanced Visualizations**: Professional charts and heatmaps showing statistical relationships
 - **Player Performance Metrics**: Custom efficiency ratings and advanced statistics
 - **Team Comparisons**: Cross-team analysis of performance indicators
 - **Position-Based Analysis**: Statistical breakdowns by player position
-- **Interactive Jupyter Notebook**: Detailed step-by-step analysis with visualizations
 
 ## 🛠️ Technologies Used
 
@@ -29,53 +32,53 @@ This project provides in-depth statistical analysis of NBA player performance us
 ## 📈 Analysis Highlights
 
 ### Dataset Statistics
-- **736 total players** analyzed
-- **237 qualified players** (≥20 minutes per game, ≥40 games)
+- **6,700+ total player records** analyzed across 10 seasons
 - **31 statistical categories** including points, rebounds, assists, shooting percentages
 - **Custom metrics** including True Shooting %, Player Efficiency Rating (PER), and combined ratings
 
 ### Key Insights Discovered
 
-#### 🏆 Top Performers (2023-24 Season)
-- **Leading Scorer**: Comprehensive analysis of top scoring leaders
-- **Most Efficient Players**: Advanced efficiency metrics beyond basic statistics
-- **Position Excellence**: Identification of best performers by position
+#### 🏆 Statistical Trends (2015-2024)
+- **Three-Point Revolution**: Visualization of the dramatic increase in 3-point attempts
+- **Position Evolution**: Analysis of changing position distributions over time
+- **Scoring Trends**: Examination of scoring patterns across seasons
 
 #### 📊 Statistical Correlations
-- Strong correlation between minutes played and scoring output
-- Relationship between age and playing time
-- Shooting efficiency vs. attempt volume analysis
-- Position-specific performance patterns
+- Changing correlations between different metrics over time
+- Position-specific performance patterns across seasons
+- Efficiency evolution as the game has changed
 
 #### 🏀 Team Analysis
-- Cross-team performance comparisons
-- Offensive and defensive statistical leaders
-- Team shooting efficiency rankings
-- Balanced roster analysis
+- Cross-team performance comparisons 
+- Team-specific position distribution strategies
+- Evolution of team statistical profiles
 
 #### 📍 Position-Based Insights
-- **Centers**: Excel in rebounds and blocks
-- **Point Guards**: Lead in assists and playmaking
-- **Shooting Guards**: High 3-point shooting volume
-- **Forwards**: Balanced scoring and rebounding contributions
+- **Traditional vs. Modern Centers**: Evolution of the center position
+- **Point Guard Revolution**: Changed role of point guards in modern NBA
+- **Position-less Basketball**: Emergence of versatile player profiles
 
 ## 🗂️ Project Structure
 
 ```
 nba_analysis/
-├── data/
-│   └── nba_player_stats_2023_24_per_game.csv
+├── datasets/
+│   ├── nba_player_stats_2015_16.csv
+│   ├── ...
+│   └── nba_player_stats_2023_24.csv
+│   └── all_nba_player_stats_2015_2024.csv
 ├── sql_analysis/
 │   ├── load_nba_data.sql
 │   └── nba_stats_analysis.sql
 ├── images/
 │   ├── position_distribution.png
 │   ├── correlation_matrix.png
-│   ├── top_performers.png
-│   ├── team_comparison.png
-│   └── efficiency_analysis.png
+│   ├── top_scorers.png
+│   ├── nba_analysis_demo.gif
+│   └── scoring_efficiency.png
 ├── nba_scraper.py
-├── nba_stats_analysis.ipynb
+├── merge_csv_files.py
+├── create_animated_gif.py
 ├── generate_visualizations.py
 ├── requirements.txt
 └── README.md
@@ -93,8 +96,8 @@ pip (Python package manager)
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/ozzy2438/NBA-Scarping-and-Aanalyzing.git
-cd NBA-Scarping-and-Aanalyzing
+git clone https://github.com/ozzy2438/NBA-Analysis.git
+cd NBA-Analysis
 ```
 
 2. **Create virtual environment**
@@ -108,9 +111,9 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-4. **Launch Jupyter Notebook**
+4. **Generate visualizations**
 ```bash
-jupyter notebook nba_stats_analysis.ipynb
+python generate_visualizations.py
 ```
 
 ## 📊 Data Sources
@@ -121,23 +124,22 @@ jupyter notebook nba_stats_analysis.ipynb
 
 ## 🔍 Analysis Methodology
 
-### 1. Data Collection & Cleaning
-- Web scraping of current season statistics
-- Data validation and type conversion
-- Missing value handling and outlier analysis
+### 1. Data Collection & Consolidation
+- Web scraping of statistics across 10 seasons
+- Data consolidation into a unified dataset
+- Consistent season identification and formatting
 - Feature engineering for advanced metrics
 
-### 2. Exploratory Data Analysis
-- Statistical distribution analysis
-- Correlation matrix generation
-- Player and team performance ranking
-- Position-based statistical breakdowns
+### 2. Multi-Season Analysis
+- Statistical trend identification
+- Position distribution evolution
+- Year-over-year comparison of key metrics
+- Correlation pattern changes over time
 
 ### 3. Advanced Analytics
-- True Shooting Percentage calculations
-- Player Efficiency Rating (PER) computation
-- Custom combined rating system
-- Win Shares and Box Plus/Minus integration
+- Efficiency metric evolution
+- Position-specific performance changes
+- League-wide statistical pattern identification
 
 ### 4. Visualization & Insights
 - Professional statistical visualizations
@@ -149,11 +151,11 @@ jupyter notebook nba_stats_analysis.ipynb
 
 The analysis includes several professional visualizations:
 
-- **Player Performance Heatmaps**: Correlation analysis of key statistics
-- **Team Comparison Charts**: Cross-team performance metrics
-- **Position Analysis**: Statistical breakdowns by player position
+- **Animated GIF Dashboard**: Overview of key statistical findings
+- **Position Evolution Charts**: Tracking changing positions over time
+- **Statistical Trend Analysis**: Visualization of key metric changes
 - **Efficiency Scatter Plots**: Advanced metric relationships
-- **Top Performer Rankings**: Comprehensive player rankings
+- **Correlation Heatmaps**: Statistical relationship analysis
 
 ## 🎯 Business Applications
 
@@ -168,10 +170,10 @@ This analysis provides valuable insights for:
 ## 📊 SQL Analysis
 
 The project includes comprehensive SQL analysis for:
-- Database-driven statistical queries
+- Multi-season trend analysis
 - Complex joins and aggregations
 - Performance metric calculations
-- Trend analysis over time
+- Evolution analysis over time
 
 ## 🔮 Future Enhancements
 
