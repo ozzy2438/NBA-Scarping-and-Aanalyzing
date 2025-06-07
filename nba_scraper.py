@@ -113,7 +113,7 @@ def scrape_nba_stats(season_end_year=2022, stat_type='per_game'):
     Returns:
         DataFrame: A pandas DataFrame containing the player statistics.
     """
-    print(f"Başlatılıyor: {season_end_year-1}-{str(season_end_year)[-2:]} sezonu {stat_type} istatistikleri çekiliyor...")
+    print(f"Starting: Retrieving {season_end_year-1}-{str(season_end_year)[-2:]} season {stat_type} statistics...")
     
     # Get the URL for the specified season and stat type
     url = get_stat_url(season_end_year, stat_type)
@@ -131,7 +131,7 @@ def scrape_nba_stats(season_end_year=2022, stat_type='per_game'):
         # Implement rate limiting - random delay between 1-3 seconds
         # This ensures we stay well below the 20 requests per minute limit
         delay = 1 + 2 * random.random()
-        print(f"Rate limiting: {delay:.2f} saniye bekleniyor...")
+        print(f"Rate limiting: Waiting {delay:.2f} seconds...")
         time.sleep(delay)
         
         # Send a GET request to the URL
@@ -139,7 +139,7 @@ def scrape_nba_stats(season_end_year=2022, stat_type='per_game'):
         
         # Check if the request was successful
         if response.status_code == 200:
-            print(f"Bağlantı başarılı: {url}")
+            print(f"Connection successful: {url}")
             
             # Parse the HTML content
             soup = BeautifulSoup(response.content, 'html.parser')
@@ -183,17 +183,17 @@ def scrape_nba_stats(season_end_year=2022, stat_type='per_game'):
                 
                 # Create a DataFrame
                 df = pd.DataFrame(rows, columns=headers)
-                print(f"Toplam {len(df)} oyuncu verisi çekildi.")
+                print(f"Total {len(df)} player data retrieved.")
                 return df
             else:
-                print(f"Hata: İstatistik tablosu bulunamadı. Tablo ID: {table_id}")
+                print(f"Error: Statistics table not found. Table ID: {table_id}")
                 return None
         else:
-            print(f"Hata: Sayfa yüklenemedi. Durum kodu: {response.status_code}")
+            print(f"Error: Page could not be loaded. Status code: {response.status_code}")
             return None
     
     except Exception as e:
-        print(f"Hata oluştu: {str(e)}")
+        print(f"Error occurred: {str(e)}")
         return None
 
 def save_to_csv(df, season_end_year=2022, stat_type='per_game'):
@@ -214,10 +214,10 @@ def save_to_csv(df, season_end_year=2022, stat_type='per_game'):
         
         # Save the DataFrame to a CSV file
         df.to_csv(filename, index=False, encoding='utf-8')
-        print(f"Veriler başarıyla kaydedildi: {filename}")
+        print(f"Data successfully saved: {filename}")
         return filename
     except Exception as e:
-        print(f"CSV kaydetme hatası: {str(e)}")
+        print(f"CSV saving error: {str(e)}")
         return None
 
 def display_data_info(df, filename):
@@ -228,23 +228,23 @@ def display_data_info(df, filename):
         df (DataFrame): The DataFrame containing the scraped data.
         filename (str): The name of the CSV file.
     """
-    print("\nVeri Özeti:")
-    print(f"- Dosya: {filename}")
-    print(f"- Toplam oyuncu sayısı: {len(df)}")
-    print(f"- Sütun sayısı: {len(df.columns)}")
+    print("\nData Summary:")
+    print(f"- File: {filename}")
+    print(f"- Total number of players: {len(df)}")
+    print(f"- Number of columns: {len(df.columns)}")
     
     # Display the first few rows of the DataFrame
-    print("\nİlk 5 satır:")
+    print("\nFirst 5 rows:")
     print(df.head().to_string())
     
     # Display column names
-    print("\nSütun isimleri:")
+    print("\nColumn names:")
     print(df.columns.tolist())
     
     # Display some basic statistics if numeric columns exist
     numeric_cols = df.select_dtypes(include=['float64', 'int64']).columns
     if len(numeric_cols) > 0:
-        print("\nSayısal sütunlar için temel istatistikler:")
+        print("\nBasic statistics for numeric columns:")
         print(df[numeric_cols].describe().to_string())
 
 def scrape_multiple_seasons(start_year, end_year, stat_type='per_game'):
@@ -263,7 +263,7 @@ def scrape_multiple_seasons(start_year, end_year, stat_type='per_game'):
     
     for year in range(start_year, end_year + 1):
         print(f"\n{'='*50}")
-        print(f"İşleniyor: {year-1}-{str(year)[-2:]} Sezonu")
+        print(f"Processing: {year-1}-{str(year)[-2:]} Season")
         print(f"{'='*50}")
         
         # Scrape data for the current season
@@ -275,15 +275,15 @@ def scrape_multiple_seasons(start_year, end_year, stat_type='per_game'):
             
             if filename:
                 results[year] = filename
-                print(f"{year-1}-{str(year)[-2:]} sezonu verileri başarıyla kaydedildi.")
+                print(f"{year-1}-{str(year)[-2:]} season data successfully saved.")
             else:
-                print(f"{year-1}-{str(year)[-2:]} sezonu verileri kaydedilemedi.")
+                print(f"{year-1}-{str(year)[-2:]} season data could not be saved.")
         else:
-            print(f"{year-1}-{str(year)[-2:]} sezonu verileri çekilemedi.")
+            print(f"{year-1}-{str(year)[-2:]} season data could not be retrieved.")
         
         # Add a longer delay between seasons to be extra respectful of the server
         delay = 3 + 2 * random.random()
-        print(f"Sonraki sezona geçmeden önce {delay:.2f} saniye bekleniyor...")
+        print(f"Waiting {delay:.2f} seconds before proceeding to the next season...")
         time.sleep(delay)
     
     return results
@@ -304,18 +304,18 @@ def main():
             
             # Validate the year range
             if start_year < 1950 or end_year > 2025 or start_year > end_year:
-                print("Hata: Geçersiz yıl aralığı. Başlangıç yılı 1950'den büyük, bitiş yılı 2025'ten küçük olmalı ve başlangıç yılı bitiş yılından küçük olmalıdır.")
+                print("Error: Invalid year range. Start year should be greater than 1950, end year should be less than 2025, and start year should be less than end year.")
                 return
             
-            print(f"Çoklu sezon modunda çalışılıyor: {start_year} - {end_year}, İstatistik türü: {stat_type}")
+            print(f"Running in multi-season mode: {start_year} - {end_year}, Statistic type: {stat_type}")
             results = scrape_multiple_seasons(start_year, end_year, stat_type)
             
-            print("\nÇoklu sezon işlemi tamamlandı:")
+            print("\nMulti-season process completed:")
             for year, filename in results.items():
                 print(f"- {year-1}-{str(year)[-2:]}: {filename}")
         else:
-            print("Hata: --multi kullanımı için --start ve --end parametrelerini belirtin.")
-            print("Örnek: python nba_scraper.py --multi --start 2022 --end 2025 [stat_type]")
+            print("Error: For --multi usage, specify --start and --end parameters.")
+            print("Example: python nba_scraper.py --multi --start 2022 --end 2025 [stat_type]")
         return
     
     # Normal single-season mode
@@ -323,7 +323,7 @@ def main():
     
     # Validate season year
     if season_end_year < 1950 or season_end_year > 2025:
-        print("Hata: Geçersiz sezon yılı. 1950 ile 2025 arasında bir yıl girin.")
+        print("Error: Invalid season year. Enter a year between 1950 and 2025.")
         return
     
     # Scrape NBA player statistics
@@ -337,9 +337,9 @@ def main():
             # Display information about the scraped data
             display_data_info(df, filename)
             
-            print(f"\nİşlem tamamlandı. {filename} dosyası oluşturuldu.")
+            print(f"\nProcess completed. {filename} file created.")
     else:
-        print("Veri çekme işlemi başarısız oldu.")
+        print("Data retrieval process failed.")
 
 if __name__ == "__main__":
     main()
