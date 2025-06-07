@@ -10,7 +10,10 @@ import seaborn as sns
 import numpy as np
 from PIL import Image
 import io
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -32,7 +35,11 @@ def create_title_frame():
             fontsize=28, fontweight='bold', ha='center', va='center',
             bbox=dict(boxstyle="round,pad=0.5", facecolor="orange", alpha=0.8))
     
+<<<<<<< HEAD
     ax.text(5, 5.5, '2015-2024 Seasons Statistical Analysis', 
+=======
+    ax.text(5, 5.5, '2023-24 Season Statistical Analysis', 
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
             fontsize=18, ha='center', va='center')
     
     ax.text(5, 4.5, 'Data Science Portfolio Project', 
@@ -81,6 +88,7 @@ def create_data_overview_frame(df):
         ax2.text(0.5, 0.5, 'Age data\nnot available', ha='center', va='center', transform=ax2.transAxes)
         ax2.set_title('Age Distribution', fontweight='bold', fontsize=12)
     
+<<<<<<< HEAD
     # Season breakdown
     if 'Season' in df.columns:
         season_counts = df['Season'].value_counts().sort_index()
@@ -114,6 +122,26 @@ def create_data_overview_frame(df):
     
     ax4.text(0.5, 0.2, f'Features: {len(df.columns)}', fontsize=14, ha='center', va='center', 
              transform=ax4.transAxes)
+=======
+    # Minutes vs Points
+    if 'MP' in df.columns and 'PTS' in df.columns:
+        valid_data = df[['MP', 'PTS']].dropna()
+        ax3.scatter(valid_data['MP'], valid_data['PTS'], alpha=0.6, s=30)
+        ax3.set_title('Minutes vs Points', fontweight='bold', fontsize=12)
+        ax3.set_xlabel('Minutes per Game')
+        ax3.set_ylabel('Points per Game')
+    else:
+        ax3.text(0.5, 0.5, 'Minutes/Points\ndata not available', ha='center', va='center', transform=ax3.transAxes)
+        ax3.set_title('Minutes vs Points', fontweight='bold', fontsize=12)
+    
+    # Dataset stats
+    ax4.text(0.5, 0.7, f'Total Players: {len(df)}', fontsize=16, ha='center', va='center', 
+             transform=ax4.transAxes, fontweight='bold')
+    ax4.text(0.5, 0.5, f'Features: {len(df.columns)}', fontsize=14, ha='center', va='center', 
+             transform=ax4.transAxes)
+    ax4.text(0.5, 0.3, '2023-24 NBA Season', fontsize=12, ha='center', va='center', 
+             transform=ax4.transAxes, style='italic')
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     ax4.set_title('Dataset Overview', fontweight='bold', fontsize=12)
     ax4.axis('off')
     
@@ -129,6 +157,7 @@ def create_data_overview_frame(df):
 
 def create_top_performers_frame(df):
     """Create top performers visualization"""
+<<<<<<< HEAD
     # Get latest season
     if 'Season' in df.columns:
         latest_season = sorted(df['Season'].unique())[-1]
@@ -143,6 +172,13 @@ def create_top_performers_frame(df):
     # Top scorers
     if 'PTS' in df_latest.columns and 'Player' in df_latest.columns:
         top_scorers = df_latest.nlargest(8, 'PTS')
+=======
+    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 8))
+    
+    # Top scorers
+    if 'PTS' in df.columns and 'Player' in df.columns:
+        top_scorers = df.nlargest(8, 'PTS')
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         bars1 = ax1.bar(range(len(top_scorers)), top_scorers['PTS'], color='red', alpha=0.7)
         ax1.set_title('🏆 Top Scorers', fontweight='bold', fontsize=12)
         ax1.set_xticks(range(len(top_scorers)))
@@ -160,8 +196,13 @@ def create_top_performers_frame(df):
         ax1.set_title('🏆 Top Scorers', fontweight='bold', fontsize=12)
     
     # Top rebounders
+<<<<<<< HEAD
     if 'TRB' in df_latest.columns and 'Player' in df_latest.columns:
         top_rebounders = df_latest.nlargest(8, 'TRB')
+=======
+    if 'TRB' in df.columns and 'Player' in df.columns:
+        top_rebounders = df.nlargest(8, 'TRB')
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         bars2 = ax2.bar(range(len(top_rebounders)), top_rebounders['TRB'], color='green', alpha=0.7)
         ax2.set_title('🏀 Top Rebounders', fontweight='bold', fontsize=12)
         ax2.set_xticks(range(len(top_rebounders)))
@@ -178,8 +219,13 @@ def create_top_performers_frame(df):
         ax2.set_title('🏀 Top Rebounders', fontweight='bold', fontsize=12)
     
     # Top assist leaders
+<<<<<<< HEAD
     if 'AST' in df_latest.columns and 'Player' in df_latest.columns:
         top_assisters = df_latest.nlargest(8, 'AST')
+=======
+    if 'AST' in df.columns and 'Player' in df.columns:
+        top_assisters = df.nlargest(8, 'AST')
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         bars3 = ax3.bar(range(len(top_assisters)), top_assisters['AST'], color='blue', alpha=0.7)
         ax3.set_title('🎯 Top Assist Leaders', fontweight='bold', fontsize=12)
         ax3.set_xticks(range(len(top_assisters)))
@@ -196,8 +242,13 @@ def create_top_performers_frame(df):
         ax3.set_title('🎯 Top Assist Leaders', fontweight='bold', fontsize=12)
     
     # Shooting efficiency
+<<<<<<< HEAD
     if all(col in df_latest.columns for col in ['FGA', 'PTS', 'FG%', 'MP']):
         qualified = df_latest[df_latest['MP'] >= 15].dropna(subset=['FGA', 'PTS', 'FG%'])
+=======
+    if all(col in df.columns for col in ['FGA', 'PTS', 'FG%', 'MP']):
+        qualified = df[df['MP'] >= 15].dropna(subset=['FGA', 'PTS', 'FG%'])
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         if len(qualified) > 0:
             scatter = ax4.scatter(qualified['FGA'], qualified['PTS'], c=qualified['FG%'], 
                                  cmap='viridis', alpha=0.7, s=40)
@@ -212,6 +263,7 @@ def create_top_performers_frame(df):
         ax4.text(0.5, 0.5, 'Efficiency data\nnot available', ha='center', va='center', transform=ax4.transAxes)
         ax4.set_title('📈 Scoring Efficiency', fontweight='bold', fontsize=12)
     
+<<<<<<< HEAD
     plt.suptitle(f'🌟 {season_title} Top Performers', fontsize=16, fontweight='bold')
     plt.tight_layout()
     
@@ -344,6 +396,9 @@ def create_scoring_trends_frame(df):
         axes[j].set_visible(False)
     
     plt.suptitle('📈 NBA Statistical Trends (2015-2024)', fontsize=16, fontweight='bold')
+=======
+    plt.suptitle('🌟 2023-24 Season Top Performers', fontsize=16, fontweight='bold')
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     plt.tight_layout()
     
     buf = io.BytesIO()
@@ -367,12 +422,21 @@ def create_insights_frame():
     
     # Insights
     insights = [
+<<<<<<< HEAD
         "📊 10-year analysis of NBA player statistics (2015-2024)",
         "🏆 Evolution of position distributions and player roles",
         "📈 Statistical trends showing the 3-point revolution",
         "🎯 Correlation patterns across different performance metrics",
         "📍 Comparative analysis of efficiency across seasons",
         "🏀 Multi-season performance metrics and visualizations"
+=======
+        "📊 Comprehensive analysis of NBA player statistics",
+        "🏆 Advanced performance metrics and efficiency ratings",
+        "📈 Statistical correlations and relationship analysis",
+        "🎯 Position-based performance breakdowns",
+        "📍 Team comparison and ranking analysis",
+        "🏀 Professional data science portfolio project"
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     ]
     
     for i, insight in enumerate(insights):
@@ -395,6 +459,7 @@ def create_insights_frame():
 
 def create_animated_gif():
     """Create the animated GIF"""
+<<<<<<< HEAD
     # Create images directory if it doesn't exist
     os.makedirs('images', exist_ok=True)
     
@@ -413,6 +478,10 @@ def create_animated_gif():
         except FileNotFoundError:
             print("Error: No data file found. Please ensure either multi-season or single-season data exists.")
             return
+=======
+    print("Loading NBA data...")
+    df = pd.read_csv('data/nba_player_stats_2023_24_per_game.csv')
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     
     # Convert numeric columns safely
     numeric_cols = ['Age', 'G', 'GS', 'MP', 'FG', 'FGA', '3P', '3PA', '2P', '2PA', 
@@ -423,6 +492,11 @@ def create_animated_gif():
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
     
+<<<<<<< HEAD
+=======
+    print(f"Data loaded: {len(df)} players, {len(df.columns)} features")
+    
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     print("Creating animation frames...")
     frames = []
     
@@ -437,6 +511,7 @@ def create_animated_gif():
         frames.append(create_top_performers_frame(df))
         print("✓ Top performers frame created")
         
+<<<<<<< HEAD
         if data_type == "multi-season":
             frames.append(create_position_evolution_frame(df))
             print("✓ Position evolution frame created")
@@ -444,6 +519,8 @@ def create_animated_gif():
             frames.append(create_scoring_trends_frame(df))
             print("✓ Scoring trends frame created")
         
+=======
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         frames.append(create_insights_frame())
         print("✓ Insights frame created")
         
@@ -467,11 +544,19 @@ def create_animated_gif():
         )
         
         print("✅ Animated GIF created: images/nba_analysis_demo.gif")
+<<<<<<< HEAD
         print("🎬 Ready for GitHub upload and portfolio presentation!")
+=======
+        print("🎬 Ready for portfolio presentation!")
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         
     except Exception as e:
         print(f"Error creating GIF: {e}")
         print("Please check your data file and try again.")
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     create_animated_gif() 
+=======
+    create_animated_gif()
+>>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
