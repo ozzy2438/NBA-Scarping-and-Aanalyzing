@@ -205,8 +205,17 @@ def main():
     create_age_performance_analysis(df)
     print("✓ Age performance analysis created")
     
-    print("\nAll visualizations saved to 'images/' folder!")
-    print("Ready for portfolio presentation! 🏀📊")
+    print("\n🎉 All visualizations completed!")
+    print("Generated files in 'images/' directory:")
+    print("- top_scorers.png")
+    print("- scoring_efficiency.png")
+    print("- team_performance_heatmap.png")
+    print("- position_analysis.png")
+    print("- correlation_matrix.png")
+    print("- age_performance_analysis.png")
 
 if __name__ == "__main__":
-    main() 
+    # Create images directory if it doesn't exist
+    import os
+    os.makedirs('images', exist_ok=True)
+    main()
