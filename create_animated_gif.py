@@ -10,10 +10,7 @@ import seaborn as sns
 import numpy as np
 from PIL import Image
 import io
-<<<<<<< HEAD
 import os
-=======
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -26,35 +23,31 @@ def create_title_frame():
     fig, ax = plt.subplots(figsize=(12, 8))
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 10)
-    
+
     # Remove axes
     ax.axis('off')
-    
+
     # Add title and subtitle
-    ax.text(5, 7, '🏀 NBA Analytics Dashboard', 
+    ax.text(5, 7, '🏀 NBA Analytics Dashboard',
             fontsize=28, fontweight='bold', ha='center', va='center',
             bbox=dict(boxstyle="round,pad=0.5", facecolor="orange", alpha=0.8))
-    
-<<<<<<< HEAD
-    ax.text(5, 5.5, '2015-2024 Seasons Statistical Analysis', 
-=======
-    ax.text(5, 5.5, '2023-24 Season Statistical Analysis', 
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
+
+    ax.text(5, 5.5, '2015-2024 Seasons Statistical Analysis',
             fontsize=18, ha='center', va='center')
-    
-    ax.text(5, 4.5, 'Data Science Portfolio Project', 
+
+    ax.text(5, 4.5, 'Data Science Portfolio Project',
             fontsize=14, ha='center', va='center', style='italic')
-    
-    ax.text(5, 3, 'By Osman Orka', 
+
+    ax.text(5, 3, 'By Osman Orka',
             fontsize=16, fontweight='bold', ha='center', va='center')
-    
+
     # Add some basketball emojis around
     positions = [(1, 8), (9, 8), (1, 2), (9, 2), (2, 5), (8, 5)]
     for x, y in positions:
         ax.text(x, y, '🏀', fontsize=20, ha='center', va='center')
-    
+
     plt.tight_layout()
-    
+
     # Save to bytes
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
@@ -66,7 +59,7 @@ def create_title_frame():
 def create_data_overview_frame(df):
     """Create data overview frame"""
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 8))
-    
+
     # Players by position - handle missing values
     if 'Pos' in df.columns:
         position_counts = df['Pos'].value_counts().head(8)  # Top 8 positions
@@ -75,7 +68,7 @@ def create_data_overview_frame(df):
     else:
         ax1.text(0.5, 0.5, 'Position data\nnot available', ha='center', va='center', transform=ax1.transAxes)
         ax1.set_title('Players by Position', fontweight='bold', fontsize=12)
-    
+
     # Age distribution
     if 'Age' in df.columns and df['Age'].notna().sum() > 0:
         ages = df['Age'].dropna()
@@ -87,8 +80,7 @@ def create_data_overview_frame(df):
     else:
         ax2.text(0.5, 0.5, 'Age data\nnot available', ha='center', va='center', transform=ax2.transAxes)
         ax2.set_title('Age Distribution', fontweight='bold', fontsize=12)
-    
-<<<<<<< HEAD
+
     # Season breakdown
     if 'Season' in df.columns:
         season_counts = df['Season'].value_counts().sort_index()
@@ -108,46 +100,26 @@ def create_data_overview_frame(df):
         else:
             ax3.text(0.5, 0.5, 'Season data\nnot available', ha='center', va='center', transform=ax3.transAxes)
             ax3.set_title('Season Breakdown', fontweight='bold', fontsize=12)
-    
+
     # Dataset stats
-    ax4.text(0.5, 0.8, f'Total Records: {len(df)}', fontsize=16, ha='center', va='center', 
+    ax4.text(0.5, 0.8, f'Total Records: {len(df)}', fontsize=16, ha='center', va='center',
              transform=ax4.transAxes, fontweight='bold')
-    
+
     if 'Season' in df.columns:
         seasons = df['Season'].nunique()
-        ax4.text(0.5, 0.6, f'Seasons: {seasons}', fontsize=14, ha='center', va='center', 
+        ax4.text(0.5, 0.6, f'Seasons: {seasons}', fontsize=14, ha='center', va='center',
                 transform=ax4.transAxes)
-        ax4.text(0.5, 0.4, f'Years: 2015-2024', fontsize=14, ha='center', va='center', 
+        ax4.text(0.5, 0.4, f'Years: 2015-2024', fontsize=14, ha='center', va='center',
                 transform=ax4.transAxes)
-    
-    ax4.text(0.5, 0.2, f'Features: {len(df.columns)}', fontsize=14, ha='center', va='center', 
+
+    ax4.text(0.5, 0.2, f'Features: {len(df.columns)}', fontsize=14, ha='center', va='center',
              transform=ax4.transAxes)
-=======
-    # Minutes vs Points
-    if 'MP' in df.columns and 'PTS' in df.columns:
-        valid_data = df[['MP', 'PTS']].dropna()
-        ax3.scatter(valid_data['MP'], valid_data['PTS'], alpha=0.6, s=30)
-        ax3.set_title('Minutes vs Points', fontweight='bold', fontsize=12)
-        ax3.set_xlabel('Minutes per Game')
-        ax3.set_ylabel('Points per Game')
-    else:
-        ax3.text(0.5, 0.5, 'Minutes/Points\ndata not available', ha='center', va='center', transform=ax3.transAxes)
-        ax3.set_title('Minutes vs Points', fontweight='bold', fontsize=12)
-    
-    # Dataset stats
-    ax4.text(0.5, 0.7, f'Total Players: {len(df)}', fontsize=16, ha='center', va='center', 
-             transform=ax4.transAxes, fontweight='bold')
-    ax4.text(0.5, 0.5, f'Features: {len(df.columns)}', fontsize=14, ha='center', va='center', 
-             transform=ax4.transAxes)
-    ax4.text(0.5, 0.3, '2023-24 NBA Season', fontsize=12, ha='center', va='center', 
-             transform=ax4.transAxes, style='italic')
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     ax4.set_title('Dataset Overview', fontweight='bold', fontsize=12)
     ax4.axis('off')
-    
+
     plt.suptitle('📊 Dataset Overview', fontsize=16, fontweight='bold')
     plt.tight_layout()
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
     buf.seek(0)
@@ -157,7 +129,6 @@ def create_data_overview_frame(df):
 
 def create_top_performers_frame(df):
     """Create top performers visualization"""
-<<<<<<< HEAD
     # Get latest season
     if 'Season' in df.columns:
         latest_season = sorted(df['Season'].unique())[-1]
@@ -166,19 +137,12 @@ def create_top_performers_frame(df):
     else:
         df_latest = df
         season_title = "Latest Season"
-        
+
     fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 8))
-    
+
     # Top scorers
     if 'PTS' in df_latest.columns and 'Player' in df_latest.columns:
         top_scorers = df_latest.nlargest(8, 'PTS')
-=======
-    fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(12, 8))
-    
-    # Top scorers
-    if 'PTS' in df.columns and 'Player' in df.columns:
-        top_scorers = df.nlargest(8, 'PTS')
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         bars1 = ax1.bar(range(len(top_scorers)), top_scorers['PTS'], color='red', alpha=0.7)
         ax1.set_title('🏆 Top Scorers', fontweight='bold', fontsize=12)
         ax1.set_xticks(range(len(top_scorers)))
@@ -194,15 +158,10 @@ def create_top_performers_frame(df):
     else:
         ax1.text(0.5, 0.5, 'Scoring data\nnot available', ha='center', va='center', transform=ax1.transAxes)
         ax1.set_title('🏆 Top Scorers', fontweight='bold', fontsize=12)
-    
+
     # Top rebounders
-<<<<<<< HEAD
     if 'TRB' in df_latest.columns and 'Player' in df_latest.columns:
         top_rebounders = df_latest.nlargest(8, 'TRB')
-=======
-    if 'TRB' in df.columns and 'Player' in df.columns:
-        top_rebounders = df.nlargest(8, 'TRB')
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         bars2 = ax2.bar(range(len(top_rebounders)), top_rebounders['TRB'], color='green', alpha=0.7)
         ax2.set_title('🏀 Top Rebounders', fontweight='bold', fontsize=12)
         ax2.set_xticks(range(len(top_rebounders)))
@@ -217,15 +176,10 @@ def create_top_performers_frame(df):
     else:
         ax2.text(0.5, 0.5, 'Rebounding data\nnot available', ha='center', va='center', transform=ax2.transAxes)
         ax2.set_title('🏀 Top Rebounders', fontweight='bold', fontsize=12)
-    
+
     # Top assist leaders
-<<<<<<< HEAD
     if 'AST' in df_latest.columns and 'Player' in df_latest.columns:
         top_assisters = df_latest.nlargest(8, 'AST')
-=======
-    if 'AST' in df.columns and 'Player' in df.columns:
-        top_assisters = df.nlargest(8, 'AST')
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         bars3 = ax3.bar(range(len(top_assisters)), top_assisters['AST'], color='blue', alpha=0.7)
         ax3.set_title('🎯 Top Assist Leaders', fontweight='bold', fontsize=12)
         ax3.set_xticks(range(len(top_assisters)))
@@ -240,17 +194,12 @@ def create_top_performers_frame(df):
     else:
         ax3.text(0.5, 0.5, 'Assists data\nnot available', ha='center', va='center', transform=ax3.transAxes)
         ax3.set_title('🎯 Top Assist Leaders', fontweight='bold', fontsize=12)
-    
+
     # Shooting efficiency
-<<<<<<< HEAD
     if all(col in df_latest.columns for col in ['FGA', 'PTS', 'FG%', 'MP']):
         qualified = df_latest[df_latest['MP'] >= 15].dropna(subset=['FGA', 'PTS', 'FG%'])
-=======
-    if all(col in df.columns for col in ['FGA', 'PTS', 'FG%', 'MP']):
-        qualified = df[df['MP'] >= 15].dropna(subset=['FGA', 'PTS', 'FG%'])
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
         if len(qualified) > 0:
-            scatter = ax4.scatter(qualified['FGA'], qualified['PTS'], c=qualified['FG%'], 
+            scatter = ax4.scatter(qualified['FGA'], qualified['PTS'], c=qualified['FG%'],
                                  cmap='viridis', alpha=0.7, s=40)
             ax4.set_title('📈 Scoring Efficiency', fontweight='bold', fontsize=12)
             ax4.set_xlabel('Field Goal Attempts')
@@ -262,11 +211,10 @@ def create_top_performers_frame(df):
     else:
         ax4.text(0.5, 0.5, 'Efficiency data\nnot available', ha='center', va='center', transform=ax4.transAxes)
         ax4.set_title('📈 Scoring Efficiency', fontweight='bold', fontsize=12)
-    
-<<<<<<< HEAD
+
     plt.suptitle(f'🌟 {season_title} Top Performers', fontsize=16, fontweight='bold')
     plt.tight_layout()
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
     buf.seek(0)
@@ -279,7 +227,7 @@ def create_position_evolution_frame(df):
     if 'Season' not in df.columns or 'Pos' not in df.columns:
         # Create placeholder if data isn't available
         fig, ax = plt.subplots(figsize=(12, 8))
-        ax.text(0.5, 0.5, 'Position evolution data not available', 
+        ax.text(0.5, 0.5, 'Position evolution data not available',
                 ha='center', va='center', transform=ax.transAxes, fontsize=16)
         ax.axis('off')
         plt.tight_layout()
@@ -289,18 +237,18 @@ def create_position_evolution_frame(df):
         img = Image.open(buf)
         plt.close()
         return img
-    
+
     # Count positions by season
     position_data = df.groupby(['Season', 'Pos']).size().reset_index(name='Count')
-    
+
     # Create a pivot table
     position_pivot = position_data.pivot(index='Season', columns='Pos', values='Count').fillna(0)
-    
+
     # Calculate percentages
     position_pct = position_pivot.div(position_pivot.sum(axis=1), axis=0) * 100
-    
+
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 8))
-    
+
     # Raw counts
     position_pivot.plot(kind='bar', stacked=True, ax=ax1, colormap='viridis')
     ax1.set_title('Number of Players by Position', fontsize=12, fontweight='bold')
@@ -308,7 +256,7 @@ def create_position_evolution_frame(df):
     ax1.set_ylabel('Number of Players', fontsize=10)
     ax1.tick_params(axis='x', rotation=45)
     ax1.legend(title='Position', fontsize=8, loc='upper right')
-    
+
     # Percentages
     position_pct.plot(kind='bar', stacked=True, ax=ax2, colormap='viridis')
     ax2.set_title('Position Distribution (%)', fontsize=12, fontweight='bold')
@@ -316,10 +264,10 @@ def create_position_evolution_frame(df):
     ax2.set_ylabel('Percentage', fontsize=10)
     ax2.tick_params(axis='x', rotation=45)
     ax2.legend(title='Position', fontsize=8, loc='upper right')
-    
+
     plt.suptitle('📊 Evolution of NBA Position Distribution (2015-2024)', fontsize=16, fontweight='bold')
     plt.tight_layout()
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
     buf.seek(0)
@@ -332,7 +280,7 @@ def create_scoring_trends_frame(df):
     if 'Season' not in df.columns:
         # Create placeholder if data isn't available
         fig, ax = plt.subplots(figsize=(12, 8))
-        ax.text(0.5, 0.5, 'Scoring trends data not available', 
+        ax.text(0.5, 0.5, 'Scoring trends data not available',
                 ha='center', va='center', transform=ax.transAxes, fontsize=16)
         ax.axis('off')
         plt.tight_layout()
@@ -342,15 +290,15 @@ def create_scoring_trends_frame(df):
         img = Image.open(buf)
         plt.close()
         return img
-    
+
     # Group by season and calculate averages
     metrics = ['PTS', '3PA', 'AST', 'FG%']
     available_metrics = [m for m in metrics if m in df.columns]
-    
+
     if not available_metrics:
         # Create placeholder if no metrics are available
         fig, ax = plt.subplots(figsize=(12, 8))
-        ax.text(0.5, 0.5, 'Scoring metrics not available', 
+        ax.text(0.5, 0.5, 'Scoring metrics not available',
                 ha='center', va='center', transform=ax.transAxes, fontsize=16)
         ax.axis('off')
         plt.tight_layout()
@@ -360,47 +308,44 @@ def create_scoring_trends_frame(df):
         img = Image.open(buf)
         plt.close()
         return img
-    
+
     season_stats = df.groupby('Season')[available_metrics].mean().reset_index()
     season_stats = season_stats.sort_values('Season')
-    
+
     fig, axes = plt.subplots(2, 2, figsize=(12, 8))
     axes = axes.flatten()
-    
+
     titles = {
         'PTS': 'Points Per Game',
         '3PA': '3-Point Attempts',
         'AST': 'Assists Per Game',
         'FG%': 'Field Goal Percentage'
     }
-    
+
     colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728']
-    
+
     for i, metric in enumerate(available_metrics):
         if i < len(axes):
             ax = axes[i]
-            ax.plot(season_stats['Season'], season_stats[metric], marker='o', 
+            ax.plot(season_stats['Season'], season_stats[metric], marker='o',
                    linewidth=2, color=colors[i % len(colors)])
             ax.set_title(titles.get(metric, metric), fontsize=12, fontweight='bold')
             ax.set_xlabel('Season', fontsize=10)
             ax.set_ylabel(metric, fontsize=10)
             ax.grid(True, alpha=0.3)
-            
+
             # Add value annotations
             for x, y in zip(season_stats['Season'], season_stats[metric]):
-                ax.annotate(f'{y:.2f}', (x, y), textcoords="offset points", 
+                ax.annotate(f'{y:.2f}', (x, y), textcoords="offset points",
                           xytext=(0,10), ha='center', fontsize=8)
-    
+
     # Hide unused subplots
     for j in range(len(available_metrics), len(axes)):
         axes[j].set_visible(False)
-    
+
     plt.suptitle('📈 NBA Statistical Trends (2015-2024)', fontsize=16, fontweight='bold')
-=======
-    plt.suptitle('🌟 2023-24 Season Top Performers', fontsize=16, fontweight='bold')
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     plt.tight_layout()
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
     buf.seek(0)
@@ -414,42 +359,33 @@ def create_insights_frame():
     ax.set_xlim(0, 10)
     ax.set_ylim(0, 10)
     ax.axis('off')
-    
+
     # Title
-    ax.text(5, 9, '🎯 Key Insights & Findings', 
+    ax.text(5, 9, '🎯 Key Insights & Findings',
             fontsize=24, fontweight='bold', ha='center', va='center',
             bbox=dict(boxstyle="round,pad=0.5", facecolor="lightblue", alpha=0.8))
-    
+
     # Insights
     insights = [
-<<<<<<< HEAD
         "📊 10-year analysis of NBA player statistics (2015-2024)",
         "🏆 Evolution of position distributions and player roles",
         "📈 Statistical trends showing the 3-point revolution",
         "🎯 Correlation patterns across different performance metrics",
         "📍 Comparative analysis of efficiency across seasons",
         "🏀 Multi-season performance metrics and visualizations"
-=======
-        "📊 Comprehensive analysis of NBA player statistics",
-        "🏆 Advanced performance metrics and efficiency ratings",
-        "📈 Statistical correlations and relationship analysis",
-        "🎯 Position-based performance breakdowns",
-        "📍 Team comparison and ranking analysis",
-        "🏀 Professional data science portfolio project"
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
     ]
-    
+
     for i, insight in enumerate(insights):
-        ax.text(5, 7.5 - i*0.8, insight, 
+        ax.text(5, 7.5 - i*0.8, insight,
                 fontsize=14, ha='center', va='center',
                 bbox=dict(boxstyle="round,pad=0.3", facecolor="white", alpha=0.7))
-    
+
     # Footer
-    ax.text(5, 1, 'Data Science Portfolio | github.com/ozzy2438', 
+    ax.text(5, 1, 'Data Science Portfolio | github.com/ozzy2438',
             fontsize=12, ha='center', va='center', style='italic')
-    
+
     plt.tight_layout()
-    
+
     buf = io.BytesIO()
     plt.savefig(buf, format='png', dpi=100, bbox_inches='tight', facecolor='white')
     buf.seek(0)
@@ -459,10 +395,9 @@ def create_insights_frame():
 
 def create_animated_gif():
     """Create the animated GIF"""
-<<<<<<< HEAD
     # Create images directory if it doesn't exist
     os.makedirs('images', exist_ok=True)
-    
+
     print("Loading NBA data...")
     try:
         # Try loading the multi-season dataset
@@ -478,62 +413,50 @@ def create_animated_gif():
         except FileNotFoundError:
             print("Error: No data file found. Please ensure either multi-season or single-season data exists.")
             return
-=======
-    print("Loading NBA data...")
-    df = pd.read_csv('data/nba_player_stats_2023_24_per_game.csv')
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
-    
+
     # Convert numeric columns safely
-    numeric_cols = ['Age', 'G', 'GS', 'MP', 'FG', 'FGA', '3P', '3PA', '2P', '2PA', 
+    numeric_cols = ['Age', 'G', 'GS', 'MP', 'FG', 'FGA', '3P', '3PA', '2P', '2PA',
                     'FT', 'FTA', 'ORB', 'DRB', 'TRB', 'AST', 'STL', 'BLK', 'TOV', 'PF', 'PTS']
     percentage_cols = ['FG%', '3P%', '2P%', 'eFG%', 'FT%']
-    
+
     for col in numeric_cols + percentage_cols:
         if col in df.columns:
             df[col] = pd.to_numeric(df[col], errors='coerce')
-    
-<<<<<<< HEAD
-=======
-    print(f"Data loaded: {len(df)} players, {len(df.columns)} features")
-    
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
+
     print("Creating animation frames...")
     frames = []
-    
+
     # Create frames
     try:
         frames.append(create_title_frame())
         print("✓ Title frame created")
-        
+
         frames.append(create_data_overview_frame(df))
         print("✓ Data overview frame created")
-        
+
         frames.append(create_top_performers_frame(df))
         print("✓ Top performers frame created")
-        
-<<<<<<< HEAD
+
         if data_type == "multi-season":
             frames.append(create_position_evolution_frame(df))
             print("✓ Position evolution frame created")
-            
+
             frames.append(create_scoring_trends_frame(df))
             print("✓ Scoring trends frame created")
-        
-=======
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
+
         frames.append(create_insights_frame())
         print("✓ Insights frame created")
-        
+
         # Create GIF
         print("Generating animated GIF...")
-        
+
         # Resize all frames to the same size
         target_size = (1200, 800)
         resized_frames = []
         for frame in frames:
             resized_frame = frame.resize(target_size, Image.Resampling.LANCZOS)
             resized_frames.append(resized_frame)
-        
+
         # Save as GIF
         resized_frames[0].save(
             'images/nba_analysis_demo.gif',
@@ -542,21 +465,13 @@ def create_animated_gif():
             duration=3000,  # 3 seconds per frame
             loop=0
         )
-        
+
         print("✅ Animated GIF created: images/nba_analysis_demo.gif")
-<<<<<<< HEAD
         print("🎬 Ready for GitHub upload and portfolio presentation!")
-=======
-        print("🎬 Ready for portfolio presentation!")
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
-        
+
     except Exception as e:
         print(f"Error creating GIF: {e}")
         print("Please check your data file and try again.")
 
 if __name__ == "__main__":
-<<<<<<< HEAD
-    create_animated_gif() 
-=======
     create_animated_gif()
->>>>>>> 1937e6c560695c9e12f767ab4bd184342b6df6af
